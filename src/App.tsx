@@ -7,8 +7,8 @@ function App() {
   const [query, setQuery] = useState<string>("");
   return (
     <div className="App">
-      <NavTop />
-      <Home />
+      <NavTop query={query} setQuery={setQuery} />
+      <Home query={query} />
     </div>
   );
 }

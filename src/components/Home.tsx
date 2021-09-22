@@ -3,7 +3,11 @@ import ArtistTable from "./ArtistTable";
 import { Album } from "./types";
 import { Table, Spinner, Alert } from "react-bootstrap";
 
-const Home = () => {
+interface HomeProps {
+  query: string;
+}
+
+const Home = ({ query }: HomeProps) => {
   const [musics, setMusics] = useState<Album[]>([]);
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -11,8 +15,11 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const name = `sia`;
         const response = await fetch(
-          `https://striveschool-api.herokuapp.com/api/deezer/search?q=sia`
+          `https://striveschool-api.herokuapp.com/api/deezer/search?q=${
+            query ? query : name
+          }`
         );
         if (response.ok) {
           setLoading(false);
@@ -30,7 +37,7 @@ const Home = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [query]);
 
   return (
     <Table striped bordered hover style={{ width: "70%" }} className="ml-5">

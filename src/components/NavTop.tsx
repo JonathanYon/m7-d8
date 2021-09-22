@@ -1,7 +1,16 @@
-import { Component } from "react";
+import React, { ChangeEvent, Component, Dispatch } from "react";
 import { Nav, Navbar, Form, FormControl, Button } from "react-bootstrap";
 
-class NavTop extends Component {
+interface NavTopProps {
+  query: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+
+class NavTop extends Component<NavTopProps> {
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    this.props.setQuery(e.target.value);
+  };
+
   render() {
     return (
       <Navbar bg="dark" variant="dark">
@@ -12,7 +21,15 @@ class NavTop extends Component {
           <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+          <FormControl
+            type="text"
+            placeholder="Search"
+            value={this.props.query}
+            className="mr-sm-2"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              this.handleChange(e)
+            }
+          />
           <Button variant="outline-info">Search</Button>
         </Form>
       </Navbar>

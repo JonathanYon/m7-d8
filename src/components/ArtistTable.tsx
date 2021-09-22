@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Album } from "./types";
 
 interface ArtistTableProps {
   music: {
@@ -10,6 +11,7 @@ interface ArtistTableProps {
 }
 
 class ArtistTable extends Component<ArtistTableProps> {
+  // class ArtistTable extends Component<Album> {
   render() {
     return (
       <tr>
