@@ -1,10 +1,12 @@
-import { Component, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ArtistTable from "./ArtistTable";
 import { Album } from "./types";
-import { Table } from "react-bootstrap";
+import { Table, Spinner, Alert } from "react-bootstrap";
 
 const Home = () => {
   const [musics, setMusics] = useState<Album[]>([]);
+  const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,13 +15,17 @@ const Home = () => {
           `https://striveschool-api.herokuapp.com/api/deezer/search?q=sia`
         );
         if (response.ok) {
+          setLoading(false);
           const res = await response.json();
           setMusics(res.data);
           console.log(res.data);
         } else {
+          setLoading(false);
+          setError(true);
           console.log("error in fetch");
         }
       } catch (error) {
+        setError(true);
         console.log(error);
       }
     };
@@ -32,13 +38,17 @@ const Home = () => {
         <tr>
           <th>First Name</th>
           <th>Last Name</th>
-          <th>Username</th>
+          <th>Rank</th>
         </tr>
       </thead>
       <tbody>
-        {musics.map((music, i) => (
-          <ArtistTable music={music} key={i + 1} />
-        ))}
+        {loading ? (
+          <Spinner animation="grow" />
+        ) : error ? (
+          <Alert variant="danger">snap something wrong! come back later</Alert>
+        ) : (
+          musics.map((music, i) => <ArtistTable music={music} key={i + 1} />)
+        )}
       </tbody>
     </Table>
   );
