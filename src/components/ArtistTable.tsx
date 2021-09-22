@@ -1,25 +1,22 @@
 import { Component } from "react";
-import { Table } from "react-bootstrap";
 
-class ArtistTable extends Component {
+interface ArtistTableProps {
+  music: {
+    album: { cover: string; title: string };
+    artist: { name: string; picture: string };
+    title: string;
+    rank: number;
+  };
+}
+
+class ArtistTable extends Component<ArtistTableProps> {
   render() {
     return (
-      <Table striped bordered hover style={{ width: "70%" }} className="ml-5">
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-        </tbody>
-      </Table>
+      <tr>
+        <td>{this.props.music.artist.name}</td>
+        <td>{this.props.music.album.title}</td>
+        <td>{this.props.music.rank}</td>
+      </tr>
     );
   }
 }
